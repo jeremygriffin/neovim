@@ -4111,7 +4111,8 @@ static int do_sub(exarg_T *eap, const proftime_T timeout, const int cmdpreview_n
 
         // 3. Substitute the string. During 'inccommand' preview only do this if
         //    there is a replace pattern.
-        if (cmdpreview_ns <= 0 || has_second_delim) {
+        if (cmdpreview_ns <= 0
+            || (has_second_delim && *p_icm && strcmp(p_icm, "nosplit") != 0)) {
           linenr_T lnum_start = lnum;  // save the start lnum
           int save_ma = curbuf->b_p_ma;
           int save_sandbox = sandbox;

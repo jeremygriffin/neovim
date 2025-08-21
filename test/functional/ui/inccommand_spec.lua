@@ -1420,6 +1420,27 @@ describe('inccommand=nosplit', function()
     ]])
   end)
 
+  it('does not show inline preview for substitute', function()
+    feed(':s/two/2/g')
+    screen:expect([[
+      Inc substitution on |
+      {20:two} lines           |
+      Inc substitution on |
+      {20:two} lines           |
+                          |
+      {1:~                   }|*4
+      :%s/two/2/g^         |
+    ]])
+    feed('<CR>')
+    -- now the substitution should happen
+    expect([[
+Inc substitution on
+2 lines
+Inc substitution on
+2 lines
+]])
+  end)
+
   it('clears preview if non-previewable command is edited', function()
     -- Put a non-previewable command in history.
     feed(":echo 'foo'<CR>")
